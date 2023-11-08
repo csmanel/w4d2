@@ -27,7 +27,6 @@ class Board
 
   def populate_piece
     @board.each_with_index do |row, i|
-      # row.map! { |ele| Piece.new{ ele if [0,1,6,7].include?(i) }}
       row.map! { |ele| Piece.new if [0,1,6,7].include?(i) }
     end
   end
