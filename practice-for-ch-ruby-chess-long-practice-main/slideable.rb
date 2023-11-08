@@ -23,24 +23,31 @@ module Slideable
 
   def horizontal_and_vertical_dirs
     # getter for HORIZONTAL_AND_VERTICAL_DIRS
+    @horizontal_and_vertical_dirs
   end
 
   def diagonal_dirs
     # getter for DIAGONAL_DIRS
+    @diagonal_dirs
   end
 
   # should return an array of all the places a Piece can move to
   def moves
     # create an array to collect moves
-
+    collect_moves = []
     # iterate over each of the directions in which a slidable piece can move
+    @horizontal_and_vertical_dirs.each_with_index do |dirs, i|
+      # ele0 = > [dirx, diry]
+      
       # use the Piece subclass `#move_dirs` method to get the info on each direction 
       # for each direction, collect all possible moves in that direction
-        # add moves to our moves array
-        #(use the `grow_unblocked_moves_in_dir` helper method)
-
-
+      # add moves to our moves array
+      #(use the `grow_unblocked_moves_in_dir` helper method)
+      
+      
+    end
     # return the final array of moves (containing all possible moves in all directions)
+    collect_moves = []
   end
 
   private
