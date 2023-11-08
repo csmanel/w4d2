@@ -1,14 +1,19 @@
+require_relative 'board'
+require_relative 'slideable'
+
 class Piece
 
-  attr_reader :position
+  include Slideable
 
-  def initialize(color, board, position)
-    @color = color
-    @board = board
+  attr_accessor :position
+
+  def initialize(position)
+    # @color = color
+    # @board = board
     @position = []
   end
 
-  def moves
-    raise "Piece is missing #valid_move method"
-  end
+  # def moves
+  #   raise "Piece is missing #valid_move method"
+  # end
 end

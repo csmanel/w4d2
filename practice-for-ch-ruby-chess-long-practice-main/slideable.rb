@@ -15,11 +15,11 @@ module Slideable
   ].freeze
 
   def horizontal_and_vertical_dirs
-    @horizontal_and_vertical_dirs
+    HORIZONTAL_AND_VERTICAL_DIRS
   end
 
   def diagonal_dirs
-    @diagonal_dirs
+    DIAGONAL_DIRS
   end
 
   def moves
@@ -27,54 +27,47 @@ module Slideable
     move_dirs.each do |dx, dy|
       result = grow_unblocked_moves_in_dir(dx, dy)
       collect_moves << result
-      # for each direction, collect all possible moves in that direction
-      # add moves to our moves array
-      #(use the `grow_unblocked_moves_in_dir` helper method)
     end
-    # return the final array of moves (containing all possible moves in all directions)
     collect_moves 
+  end
+
+  def valid_pos?(pos)
+    x, y = pos
+    x < 7 && x > 0 && y < 7 && y > 0 
+  end
+
+  def empty?(pos)
+    @board[pos].empty? 
   end
 
   private
 
   def move_dirs
+    diagonal_dirs + horizontal_and_vertical_dirs
     # subclass implements this
-    raise NotImplementedError # this only executes if we don't implement in subclass
+    # raise NotImplementedError # this only executes if we don't implement in subclass
     # gets all possible moves based on direction 
   end
 
-  # this helper method is only responsible for collecting the moves in a given direction. Not all directions
-  # the given direction is represented by tow args, the combindation of a dx and dy
   def grow_unblocked_moves_in_dir(dx, dy)
     # create an array to collect moves
-    move = true
-    x, y = self.position
+    # color getter as well 
+    x, y = self.position 
+    new_position = [(dx + x), (dy + y)]
+    valid_moves = []
+    move = false
 
     until move 
-        move = false
-        new_position = [(dx + x), (dy + y)]
-        if is_valid?(new_position) || opposite_color?(new_position)
-            return new_position
-            move = true
-        end
-
-    end 
-         
-    # get the piece's current row and col 
-
-    #in a loop:
-      # increment the the piece's current row and col by dx and dy to generate a new position
-      # stop incrementing if our new position is invalid (i.e. not on the board)
-      # if the new position is empty, the piece can move here, so add the new position to the moves array
-      # if the new position is occupied with a pices of the opposite color, our piece can move here (to caputer the opposing pice), so add the new position ot our moves array
-        # but, the piece cannot continue past this point. So stop the loop
-      # if the new position is occupied by a piece of the same color 
-        # stop looping, do not add new position to moves array
-
-
-    # return the array of moves for a given direction
+      #remember condition for color and other bits 
+      # if its empty (separate the two methods)
+      if valid_pos?(new_position) && empty?(new_position)
+        valid_moves << new_position
+        new_position = [(dx + new_position[0]), (dy + new_position[1])]
+      else
+        move = true
+      end
+    end
+    valid_moves
   end
+  
 end
-
-# Note: you can invoke methods from the piece from within the module methods, and vice verca. Including a module sets up a two way street
-      
